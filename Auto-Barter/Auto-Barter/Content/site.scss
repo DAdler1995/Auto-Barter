@@ -1,0 +1,95 @@
+﻿@import url(https://fonts.googleapis.com/css?family=Open+Sans:700,400,300);
+@import url(https://fonts.googleapis.com/css?family=Gentium+Book+Basic);
+$navbar-height: 80px;
+
+/* Color Scheme */
+$Blue-Light:    #3498db;
+$Blue-Dark:     #2980b9;
+
+$White-Light:   #ecf0f1;
+$White-Dark:    #bdc3c7;
+/* Color Scheme */
+
+@mixin btn-hover($BorderColor, $BackgroundColor) {
+    border-color: darken($BorderColor, 10%);
+    background-color: darken($BackgroundColor, 10%);
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    display: table;
+    height: 100%;
+    width: 100%;
+    padding-top: $navbar-height;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.page-row {
+    display: table-row;
+    height: 1px;
+}
+
+.page-row-expanded {
+    height: 100%;
+}
+
+ .navbar-brand {
+  height: $navbar-height;
+}
+
+ .nav >li >a {
+  padding: 30px 15px;
+}
+.navbar-form {
+    padding: 10px 15px;
+}
+ .navbar-toggle {
+  padding: 10px;
+  margin: 25px 15px 25px 0;
+}
+ .navbar-brand > img {
+     height: 100%;
+ }
+
+ a:hover, a:active {
+     color: $Blue-Light !important;
+ }
+
+.btn.btn-flat-blue {
+    border-bottom: 4px solid $Blue-Dark;
+    border-radius: 4px;
+    background-color: $Blue-Light;
+    color: $White-Light;
+}
+.btn.btn-flat-blue:hover,
+.btn.btn-flat-blue:active  {    
+    @include btn-hover($Blue-Dark, $Blue-Light);
+    color: $White-Light;
+}
+
+.btn.btn-flat-default {
+    border-bottom: 4px solid $White-Dark;
+    border-radius: 4px;
+    background-color: $White-Light;
+}
+.btn.btn-flat-default:hover,
+.btn.btn-flat-default:active  {    
+    @include btn-hover($White-Dark, $White-Light);
+
+}

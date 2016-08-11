@@ -79,5 +79,59 @@ namespace Auto_Barter.Controllers
                 return RedirectToAction("Login");
             }
         }
+
+        [HttpGet]
+        public ActionResult Logout()
+        {
+            if (Session["UserId"] != null)
+            {
+                Session.Abandon();
+            }
+            return RedirectToAction("Index", "Default", null);
+        }
+
+        [HttpGet]
+        public ActionResult UserDetails()
+        {
+            if (Session["UserId"] != null)
+            {
+                var UserDetails = new UserDetails();
+                var db = new OurDbContext();
+                var id = int.Parse(Session["UserId"].ToString());
+                UserDetails = db.UserDetails.FirstOrDefault(x => x.UserAccount.UserId == id);
+
+                return View(UserDetails);
+            }
+
+            return RedirectToAction("Login");
+        }
+
+        [HttpPost]
+        public ActionResult UserDetails(UserDetails details)
+        {
+            if (Session["UserId"] != null)
+            {
+                var id = int.Parse(Session["UserId"].ToString());
+                using (OurDbContext db = new OurDbContext())
+                {
+                    var UserDetails = db.UserDetails.FirstOrDefault(x => x.UserAccount.UserId == id);
+                    if (UserDetails != null)
+                    {
+                        UserDetails = details;
+                    }
+                    else
+                    {
+                        db.UserDetails.Add(details);
+                    }
+                    db.SaveChanges();
+
+                    ViewBag.Message = "Successfully updated UserDetails";
+                    return View(UserDetails);
+                }
+            }
+
+            ViewBag.Message = "An error occured updated UserDetails";
+            return View(details);
+        }
     }
 }

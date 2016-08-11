@@ -7,13 +7,13 @@ namespace Auto_Barter.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class RemoveEmailAddress : IMigrationMetadata
+    public sealed partial class CreatedAccountDetails : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(RemoveEmailAddress));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(CreatedAccountDetails));
         
         string IMigrationMetadata.Id
         {
-            get { return "201608100538256_RemoveEmailAddress"; }
+            get { return "201608101230403_CreatedAccountDetails"; }
         }
         
         string IMigrationMetadata.Source
