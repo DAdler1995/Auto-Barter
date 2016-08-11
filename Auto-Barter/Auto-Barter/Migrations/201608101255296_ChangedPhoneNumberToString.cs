@@ -1,0 +1,18 @@
+namespace Auto_Barter.Migrations
+{
+    using System;
+    using System.Data.Entity.Migrations;
+    
+    public partial class ChangedPhoneNumberToString : DbMigration
+    {
+        public override void Up()
+        {
+            AlterColumn("dbo.UserDetails", "PhoneNumber", c => c.String());
+        }
+        
+        public override void Down()
+        {
+            AlterColumn("dbo.UserDetails", "PhoneNumber", c => c.Int(nullable: false));
+        }
+    }
+}

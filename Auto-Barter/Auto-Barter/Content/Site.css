@@ -1,18 +1,73 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
-}
+﻿@import url(https://fonts.googleapis.com/css?family=Open+Sans:700,400,300);
+@import url(https://fonts.googleapis.com/css?family=Gentium+Book+Basic);
+/* Color Scheme */
+/* Color Scheme */
+html {
+  height: 100%; }
+
+body {
+  display: table;
+  height: 100%;
+  width: 100%;
+  padding-top: 80px;
+  padding-bottom: 20px; }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
-}
+  padding-left: 15px;
+  padding-right: 15px; }
 
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
 textarea {
-    max-width: 280px;
-}
+  max-width: 280px; }
+
+.page-row {
+  display: table-row;
+  height: 1px; }
+
+.page-row-expanded {
+  height: 100%; }
+
+.navbar-brand {
+  height: 80px; }
+
+.nav > li > a {
+  padding: 30px 15px; }
+
+.navbar-form {
+  padding: 10px 15px; }
+
+.navbar-toggle {
+  padding: 10px;
+  margin: 25px 15px 25px 0; }
+
+.navbar-brand > img {
+  height: 100%; }
+
+a:hover, a:active {
+  color: #3498db !important; }
+
+.btn.btn-flat-blue {
+  border-bottom: 4px solid #2980b9;
+  border-radius: 4px;
+  background-color: #3498db;
+  color: #ecf0f1; }
+
+.btn.btn-flat-blue:hover,
+.btn.btn-flat-blue:active {
+  border-color: #20638f;
+  background-color: #217dbb;
+  color: #ecf0f1; }
+
+.btn.btn-flat-default {
+  border-bottom: 4px solid #bdc3c7;
+  border-radius: 4px;
+  background-color: #ecf0f1; }
+
+.btn.btn-flat-default:hover,
+.btn.btn-flat-default:active {
+  border-color: #a1aab0;
+  background-color: #cfd9db; }
 

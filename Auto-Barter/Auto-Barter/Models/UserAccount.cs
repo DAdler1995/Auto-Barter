@@ -21,7 +21,7 @@ namespace Auto_Barter.Models
 
         [Display(Name = "Email Address")]
         [Required(ErrorMessage = "Email address is required.")]
-        [EmailAddress(ErrorMessage = "Invalid Email Address")]
+        [EmailAddress(ErrorMessage = "Invalid Email Address.")]
         public string EmailAddress { get; set; }
 
         [Display(Name = "Password")]
