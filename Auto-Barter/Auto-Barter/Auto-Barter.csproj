@@ -214,6 +214,10 @@
     <Compile Include="Migrations\201608101255296_ChangedPhoneNumberToString.Designer.cs">
       <DependentUpon>201608101255296_ChangedPhoneNumberToString.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608111815223_AddedUserRoles.cs" />
+    <Compile Include="Migrations\201608111815223_AddedUserRoles.Designer.cs">
+      <DependentUpon>201608111815223_AddedUserRoles.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Common\Address.cs" />
     <Compile Include="Models\OurDbContext.cs" />
@@ -261,6 +265,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608101255296_ChangedPhoneNumberToString.resx">
       <DependentUpon>201608101255296_ChangedPhoneNumberToString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608111815223_AddedUserRoles.resx">
+      <DependentUpon>201608111815223_AddedUserRoles.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

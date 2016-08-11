@@ -32,12 +32,15 @@ namespace Auto_Barter.Controllers
             {
                 using (OurDbContext db = new OurDbContext())
                 {
+                    account.UserRole = UserRole.DEFAULT;
                     db.UserAccount.Add(account);
                     db.SaveChanges();
                 }
                 ModelState.Clear();
-                ViewBag.Message = $"{account.FirstName} {account.LastName} successfully registered";
+                return RedirectToAction("Login");
             }
+
+            ViewBag.Message = "An error occured creating your account. Please contact support.";
             return View();
         }
 
@@ -57,6 +60,8 @@ namespace Auto_Barter.Controllers
                 {
                     Session["UserId"] = user.UserId.ToString();
                     Session["EmailAddress"] = user.EmailAddress;
+                    Session["FullName"] = user.FullName;
+                    Session["UserRole"] = user.UserRole;
                     return RedirectToAction("LoggedIn");
                 }
                 else
@@ -118,23 +123,29 @@ namespace Auto_Barter.Controllers
                 var id = int.Parse(Session["UserId"].ToString());
                 using (OurDbContext db = new OurDbContext())
                 {
-                    var UserDetails = db.UserDetails.Include(x => x.Address).Include(x => x.UserAccount).FirstOrDefault(x => x.UserAccount.UserId == id);
-                    if (UserDetails != null)
+                    if (details.UserAccount == null)
                     {
-                        UserDetails.Address = details.Address;
-                        UserDetails.PhoneNumber = details.PhoneNumber;
-
-                        // Updating Database
-                        db.Entry(UserDetails).State = EntityState.Modified;
+                        details.UserAccount = db.UserAccount.FirstOrDefault(x => x.UserId == id);
                     }
                     else
                     {
-                        db.UserDetails.Add(details);
-                    }
-                    db.SaveChanges();
+                        var UserDetails = db.UserDetails.Include(x => x.Address).Include(x => x.UserAccount).FirstOrDefault(x => x.UserAccount.UserId == id);
+                        if (UserDetails != null)
+                        {
+                            UserDetails = details;
 
-                    ViewBag.Message = "Successfully updated UserDetails";
-                    return View(UserDetails);
+                            // Updating Database
+                            db.Entry(UserDetails).State = EntityState.Modified;
+                        }
+                        else
+                        {
+                            db.UserDetails.Add(details);
+                        }
+                        db.SaveChanges();
+
+                        ViewBag.Message = "Successfully updated UserDetails";
+                        return View(UserDetails);
+                    }
                 }
             }
 

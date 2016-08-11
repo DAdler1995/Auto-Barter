@@ -6,6 +6,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Auto_Barter.Models
 {
+    public enum UserRole
+    {
+        ADMIN,      // 0
+        SPONSOR,    // 1
+        VIP,        // 3
+        DEFAULT     // 4
+    }
+
     public class UserAccount
     {
         [Key]
@@ -33,5 +41,12 @@ namespace Auto_Barter.Models
         [Compare("Password", ErrorMessage = "Please confirm your password.")]
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
+        
+        public UserRole UserRole { get; set; }
+
+        public string FullName
+        {
+            get { return $"{FirstName} {LastName}"; }
+        }
     }
 }
