@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace Auto_Barter.Controllers
 {
@@ -95,12 +96,15 @@ namespace Auto_Barter.Controllers
         {
             if (Session["UserId"] != null)
             {
-                var UserDetails = new UserDetails();
-                var db = new OurDbContext();
-                var id = int.Parse(Session["UserId"].ToString());
-                UserDetails = db.UserDetails.FirstOrDefault(x => x.UserAccount.UserId == id);
+                using (var bd = new OurDbContext())
+                {
+                    var UserDetails = new UserDetails();
+                    var db = new OurDbContext();
+                    var id = int.Parse(Session["UserId"].ToString());
+                    UserDetails = db.UserDetails.Include(x => x.Address).Include(x => x.UserAccount).FirstOrDefault(x => x.UserAccount.UserId == id);
 
-                return View(UserDetails);
+                    return View(UserDetails);
+                }
             }
 
             return RedirectToAction("Login");
@@ -114,10 +118,14 @@ namespace Auto_Barter.Controllers
                 var id = int.Parse(Session["UserId"].ToString());
                 using (OurDbContext db = new OurDbContext())
                 {
-                    var UserDetails = db.UserDetails.FirstOrDefault(x => x.UserAccount.UserId == id);
+                    var UserDetails = db.UserDetails.Include(x => x.Address).Include(x => x.UserAccount).FirstOrDefault(x => x.UserAccount.UserId == id);
                     if (UserDetails != null)
                     {
-                        UserDetails = details;
+                        UserDetails.Address = details.Address;
+                        UserDetails.PhoneNumber = details.PhoneNumber;
+
+                        // Updating Database
+                        db.Entry(UserDetails).State = EntityState.Modified;
                     }
                     else
                     {

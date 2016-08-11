@@ -49,25 +49,105 @@ textarea {
 a:hover, a:active {
   color: #3498db !important; }
 
-.btn.btn-flat-blue {
-  border-bottom: 4px solid #2980b9;
-  border-radius: 4px;
+/* BUTTONS START */
+.btn, .btn-white, .btn-magenta, .btn-teal, .btn-blue, .btn-green, .btn-mint, .btn-black {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-image: none;
+  border-left: 0px solid transparent;
+  border-right: 0px solid transparent;
+  border-top: 0px solid transparent;
+  border-bottom: 4px solid #ccc;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  border-radius: 4px; }
+
+.btn-white {
+  border-color: #bdc3c7;
+  background-color: #ecf0f1; }
+
+.btn-white:hover,
+.btn-white:active {
+  border-color: #a1aab0;
+  background-color: #cfd9db; }
+
+.btn-magenta {
+  border-color: #8A48A2;
+  background-color: #975AAC;
+  color: #ecf0f1; }
+
+.btn-magenta:hover,
+.btn-magenta:active {
+  border-color: #6c387f;
+  background-color: #7b478c;
+  color: #ecf0f1; }
+
+.btn-teal {
+  border-color: #3B606E;
+  background-color: #406D7B;
+  color: #ecf0f1; }
+
+.btn-teal:hover,
+.btn-teal:active {
+  border-color: #29434d;
+  background-color: #2f4f59;
+  color: #ecf0f1; }
+
+.btn-blue {
+  border-color: #2980b9;
   background-color: #3498db;
   color: #ecf0f1; }
 
-.btn.btn-flat-blue:hover,
-.btn.btn-flat-blue:active {
+.btn-blue:hover,
+.btn-blue:active {
   border-color: #20638f;
   background-color: #217dbb;
   color: #ecf0f1; }
 
-.btn.btn-flat-default {
-  border-bottom: 4px solid #bdc3c7;
-  border-radius: 4px;
-  background-color: #ecf0f1; }
+.btn-green {
+  border-color: #36AA69;
+  background-color: #3EC87A; }
 
-.btn.btn-flat-default:hover,
-.btn.btn-flat-default:active {
-  border-color: #a1aab0;
-  background-color: #cfd9db; }
+.btn-green:hover,
+.btn-green:active {
+  border-color: #2a8351;
+  background-color: #2fa462; }
+
+.btn-mint {
+  border-color: #2A9C83;
+  background-color: #30B89A;
+  color: #ecf0f1; }
+
+.btn-mint:hover,
+.btn-mint:active {
+  border-color: #1f7461;
+  background-color: #259078; }
+
+.btn-black {
+  border-color: #2A2A2A;
+  background-color: #2E2E2E;
+  color: #ecf0f1; }
+
+.btn-black:hover,
+.btn-black:active {
+  border-color: #111111;
+  background-color: #151515;
+  color: #ecf0f1; }
+
+/* BUTTONS END */
 
