@@ -12,8 +12,10 @@ namespace Auto_Barter.Models
     {
         [Key]
         public int UserDetailsId { get; set; }
-        public virtual UserAccount UserAccount { get; set; }
-        public virtual Address Address { get; set; }
+
+        public UserAccount UserAccount { get; set; }
+
+        public Address Address { get; set; }
 
         [Display(Name = "Phone Number")]
         [DataType(DataType.PhoneNumber)]

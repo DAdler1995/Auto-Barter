@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
+using System.Net.Mail;
 
 namespace Auto_Barter.Controllers
 {
@@ -12,10 +14,14 @@ namespace Auto_Barter.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            using (OurDbContext db = new OurDbContext())
+            if (Session["UserRole"].ToString() == "ADMIN")
             {
-                return View(db.UserAccount.ToList());
+                using (OurDbContext db = new OurDbContext())
+                {
+                    return View(db.UserAccount.ToList());
+                }
             }
+            return RedirectToAction("Index", "Default", null);
         }
 
         [HttpGet]
@@ -31,12 +37,23 @@ namespace Auto_Barter.Controllers
             {
                 using (OurDbContext db = new OurDbContext())
                 {
+                    bool AccountExists = db.UserAccount.FirstOrDefault(x => x.EmailAddress == account.EmailAddress) != null;
+                    if (AccountExists)
+                    {
+                        ViewBag.Message = "This email address is already in use.";
+                        account.EmailAddress = null;
+                        return View(account);
+                    }
+
+                    account.UserRole = UserRole.DEFAULT;
                     db.UserAccount.Add(account);
                     db.SaveChanges();
                 }
                 ModelState.Clear();
-                ViewBag.Message = $"{account.FirstName} {account.LastName} successfully registered";
+                return RedirectToAction("Login");
             }
+
+            ViewBag.Message = "An error occured creating your account. Please contact support.";
             return View();
         }
 
@@ -56,7 +73,9 @@ namespace Auto_Barter.Controllers
                 {
                     Session["UserId"] = user.UserId.ToString();
                     Session["EmailAddress"] = user.EmailAddress;
-                    return RedirectToAction("LoggedIn");
+                    Session["FullName"] = user.FullName;
+                    Session["UserRole"] = user.UserRole;
+                    return RedirectToAction("UserDetails");
                 }
                 else
                 {
@@ -65,19 +84,6 @@ namespace Auto_Barter.Controllers
 
             }
             return View();
-        }
-
-        [HttpGet]
-        public ActionResult LoggedIn()
-        {
-            if (Session["UserId"] != null)
-            {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Login");
-            }
         }
 
         [HttpGet]
@@ -95,12 +101,14 @@ namespace Auto_Barter.Controllers
         {
             if (Session["UserId"] != null)
             {
-                var UserDetails = new UserDetails();
-                var db = new OurDbContext();
-                var id = int.Parse(Session["UserId"].ToString());
-                UserDetails = db.UserDetails.FirstOrDefault(x => x.UserAccount.UserId == id);
+                using (var db = new OurDbContext())
+                {
+                    var UserDetails = new UserDetails();
+                    var id = int.Parse(Session["UserId"].ToString());
+                    UserDetails = db.UserDetails.Include(x => x.Address).Include(x => x.UserAccount).FirstOrDefault(x => x.UserAccount.UserId == id);
 
-                return View(UserDetails);
+                    return View(UserDetails);
+                }
             }
 
             return RedirectToAction("Login");
@@ -114,24 +122,74 @@ namespace Auto_Barter.Controllers
                 var id = int.Parse(Session["UserId"].ToString());
                 using (OurDbContext db = new OurDbContext())
                 {
-                    var UserDetails = db.UserDetails.FirstOrDefault(x => x.UserAccount.UserId == id);
-                    if (UserDetails != null)
+                    if (details.UserAccount == null)
                     {
-                        UserDetails = details;
+                        details.UserAccount = db.UserAccount.FirstOrDefault(x => x.UserId == id);
                     }
                     else
                     {
-                        db.UserDetails.Add(details);
-                    }
-                    db.SaveChanges();
+                        var UserDetails = db.UserDetails.Include(x => x.Address).Include(x => x.UserAccount).FirstOrDefault(x => x.UserAccount.UserId == id);
+                        if (UserDetails != null)
+                        {
+                            UserDetails = details;
+                            db.Entry(UserDetails).State = EntityState.Modified;
+                        }
+                        else
+                        {
+                            db.UserDetails.Add(details);
+                        }
+                        db.SaveChanges();
 
-                    ViewBag.Message = "Successfully updated UserDetails";
-                    return View(UserDetails);
+                        ViewBag.Message = "Successfully updated UserDetails";
+                        return View(UserDetails);
+                    }
                 }
             }
 
             ViewBag.Message = "An error occured updated UserDetails";
             return View(details);
+        }
+
+        [HttpGet]
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ForgotPassword(string emailAddress)
+        {
+            // TODO: Hook this up once it's hosted on a server
+            //if (string.IsNullOrEmpty(emailAddress))
+            //{
+            //    ViewBag.Message = "Please enter a valid Email Address";
+            //    return View();
+            //}
+
+            //using (OurDbContext db = new OurDbContext())
+            //{
+            //    var ExistingAccount = db.UserAccount.FirstOrDefault(x => x.EmailAddress == emailAddress);
+
+            //    if (ExistingAccount != null)
+            //    {
+            //        MailMessage message = new MailMessage();
+            //        SmtpClient client = new SmtpClient();
+            //        client.Port = 587;
+            //        client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            //        client.UseDefaultCredentials = false;
+            //        client.Host = "smtp.gmail.com";
+            //        client.EnableSsl = true;
+
+            //        message.To.Add(new MailAddress("Zeketiki@gmail.com"/*ExistingAccount.UserAccount.EmailAddress*/));
+            //        message.Subject = "Auto-Barter.com | Account Recovery";
+            //        message.From = new MailAddress("EmaiRecovery@Auto-Barter.com");
+            //        message.Body = "Email Recovery.";
+
+            //        client.Send(message);
+            //    }
+            //}
+
+            return View();
         }
     }
 }

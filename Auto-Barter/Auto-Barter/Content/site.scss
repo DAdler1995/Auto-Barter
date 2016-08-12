@@ -1,19 +1,46 @@
 ﻿@import url(https://fonts.googleapis.com/css?family=Open+Sans:700,400,300);
 @import url(https://fonts.googleapis.com/css?family=Gentium+Book+Basic);
+$GeneralFont:   'Gentium Book Basic', serif;
+$TitleFont:     'Open Sans', sans-serif;
+
 $navbar-height: 80px;
 
-/* Color Scheme */
-$Blue-Light:    #3498db;
-$Blue-Dark:     #2980b9;
+/* Color Scheme START */
+$Blue-Light: #3498db;
+$Blue-Dark: #2980b9;
 
-$White-Light:   #ecf0f1;
-$White-Dark:    #bdc3c7;
-/* Color Scheme */
+$White-Light: #ecf0f1;
+$White-Dark: #bdc3c7;
 
+$Magenta-Light: #975AAC;
+$Magenta-Dark: #8A48A2;
+
+$Teal-Light: #406D7B;
+$Teal-Dark: #3B606E;
+
+$Green-Light: #3EC87A;
+$Green-Dark: #36AA69;
+
+$Mint-Light: #30B89A;
+$Mint-Dark: #2A9C83;
+
+$Black-Light: #2E2E2E;
+$Black-Dark: #2A2A2A;
+/* Color Scheme END */
+
+/* Mixins START */
 @mixin btn-hover($BorderColor, $BackgroundColor) {
     border-color: darken($BorderColor, 10%);
     background-color: darken($BackgroundColor, 10%);
 }
+
+@mixin border-radius($radius) {
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    -ms-border-radius: $radius;
+    border-radius: $radius;
+}
+/* Mixins END */
 
 html {
     height: 100%;
@@ -25,6 +52,16 @@ body {
     width: 100%;
     padding-top: $navbar-height;
     padding-bottom: 20px;
+    font-family: $GeneralFont;
+    font-weight: 400;
+}
+
+a, a:hover, a:focus, a:active {
+    text-decoration: none;
+}
+
+header, thead, h1, h2, h3, h4, h5, h6, th, nav, .nav, strong, .strong {
+    font-family: $TitleFont;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -49,47 +86,146 @@ textarea {
     height: 100%;
 }
 
- .navbar-brand {
-  height: $navbar-height;
+.navbar-brand {
+    height: $navbar-height;
 }
 
- .nav >li >a {
-  padding: 30px 15px;
+.navbar .nav > li > a {
+    padding: 30px 15px;
 }
+
 .navbar-form {
     padding: 10px 15px;
 }
- .navbar-toggle {
-  padding: 10px;
-  margin: 25px 15px 25px 0;
+
+.navbar-toggle {
+    padding: 10px;
+    margin: 25px 15px 25px 0;
 }
- .navbar-brand > img {
-     height: 100%;
- }
 
- a:hover, a:active {
-     color: $Blue-Light !important;
- }
+.navbar-brand > img {
+    height: 100%;
+}
 
-.btn.btn-flat-blue {
-    border-bottom: 4px solid $Blue-Dark;
-    border-radius: 4px;
+a:hover, a:active {
+    color: $Blue-Light !important;
+}
+
+/* Buttons START */
+.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border-left: 0px solid transparent;
+    border-right: 0px solid transparent;
+    border-top: 0px solid transparent;
+    border-bottom: 4px solid #ccc;
+    @include border-radius(4px);
+    font-family: $TitleFont;
+    color: #333;
+}
+
+.btn-white {
+    @extend .btn;
+    border-color: $White-Dark;
+    background-color: $White-Light;
+}
+
+.btn-white:hover,
+.btn-white:active {
+    @include btn-hover($White-Dark, $White-Light);
+    color: #333 !important;
+}
+
+.btn-magenta {
+    @extend .btn;
+    border-color: $Magenta-Dark;
+    background-color: $Magenta-Light;
+    color: $White-Light;
+}
+
+.btn-magenta:hover,
+.btn-magenta:active {
+    @include btn-hover($Magenta-Dark, $Magenta-Light);
+    color: $White-Light;
+}
+
+
+.btn-teal {
+    @extend .btn;
+    border-color: $Teal-Dark;
+    background-color: $Teal-Light;
+    color: $White-Light;
+}
+
+.btn-teal:hover,
+.btn-teal:active {
+    @include btn-hover($Teal-Dark, $Teal-Light);
+    color: $White-Light;
+}
+
+.btn-blue {
+    @extend .btn;
+    border-color: $Blue-Dark;
     background-color: $Blue-Light;
     color: $White-Light;
 }
-.btn.btn-flat-blue:hover,
-.btn.btn-flat-blue:active  {    
+
+.btn-blue:hover,
+.btn-blue:active {
     @include btn-hover($Blue-Dark, $Blue-Light);
     color: $White-Light;
 }
 
-.btn.btn-flat-default {
-    border-bottom: 4px solid $White-Dark;
-    border-radius: 4px;
-    background-color: $White-Light;
+.btn-green {
+    @extend .btn;
+    border-color: $Green-Dark;
+    background-color: $Green-Light;
 }
-.btn.btn-flat-default:hover,
-.btn.btn-flat-default:active  {    
-    @include btn-hover($White-Dark, $White-Light);
 
+.btn-green:hover,
+.btn-green:active {
+    @include btn-hover($Green-Dark, $Green-Light);
+    color: #333;
 }
+
+.btn-mint {
+    @extend .btn;
+    border-color: $Mint-Dark;
+    background-color: $Mint-Light;
+    color: $White-Light;
+}
+
+.btn-mint:hover,
+.btn-mint:active {
+    @include btn-hover($Mint-Dark, $Mint-Light);
+    color: $White-Light;
+}
+
+.btn-black {
+    @extend .btn;
+    border-color: $Black-Dark;
+    background-color: $Black-Light;
+    color: $White-Light;
+}
+
+.btn-black:hover,
+.btn-black:active {
+    @include btn-hover($Black-Dark, $Black-Light);
+    color: $White-Light;
+}
+/* Buttons END */

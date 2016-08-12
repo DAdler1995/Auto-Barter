@@ -14,11 +14,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="~/Content/Images/Logo-v1.png">
     <link rel="apple-touch-icon-precomposed" href="~/Content/Images/Logo-v1.png">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>Auto-Barter | @ViewBag.Title</title>
     @Styles.Render("~/Content/css")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    
+    <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -26,8 +30,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="#" class="navbar-brand" >
-                    <img class="hidden-xs" src="~/Content/Images/Logo-Big-v1.svg" alt="Auto-Barter" />
+                <a href="@Url.Action("Index", "Default", null)" class="navbar-brand" >
+                    <img class="hidden-xs" src="~/Content/Images/Logo-Big-v1.png" alt="Auto-Barter" />
                     <img class="hidden-lg hidden-md hidden-sm" src="~/Content/Images/Logo-v1.png" alt="Auto-Barter" />
                 </a>
             </div>
@@ -40,15 +44,29 @@
                     }
                     else
                     {
-                        <li>@Html.ActionLink(Session["EmailAddress"].ToString(), "LoggedIn", "Account")</li>
+                        if (Session["UserRole"].ToString() == "ADMIN")
+                        {
+                            <li>@Html.ActionLink("Admin Tools", "Index", "Admin")</li>
+                        }
+
+                        <li>@Html.ActionLink(Session["FullName"].ToString().Split('@')[0], "UserDetails", "Account")</li>
                         <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
                     }
                 </ul>
             </div>
         </div>
-    </div>
+    </nav>
     <div class="page-row page-row-expanded">
         <div class="container body-content">
+            @if (ViewBag.Message != null)
+            {
+            <div class="row">
+                <div class="col-xs-12">
+                    @ViewBag.Message
+                </div>
+            </div>
+            }
+
             @RenderBody()
         </div>
     </div>
@@ -58,9 +76,5 @@
             <p>&copy; @DateTime.Now.Year Auto-Barter</p>
         </div>
     </footer>
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
 </body>
 </html>

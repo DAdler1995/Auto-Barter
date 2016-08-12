@@ -7,13 +7,13 @@ namespace Auto_Barter.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class ReaddedEmailAddress : IMigrationMetadata
+    public sealed partial class AddedUserRoles : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(ReaddedEmailAddress));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddedUserRoles));
         
         string IMigrationMetadata.Id
         {
-            get { return "201608101243429_ReaddedEmailAddress"; }
+            get { return "201608111815223_AddedUserRoles"; }
         }
         
         string IMigrationMetadata.Source
