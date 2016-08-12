@@ -18,7 +18,11 @@
     @Styles.Render("~/Content/css")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    
+    <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -40,15 +44,29 @@
                     }
                     else
                     {
+                        if (Session["UserRole"].ToString() == "ADMIN")
+                        {
+                            <li>@Html.ActionLink("Admin Tools", "Index", "Admin")</li>
+                        }
+
                         <li>@Html.ActionLink(Session["FullName"].ToString().Split('@')[0], "UserDetails", "Account")</li>
                         <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
                     }
                 </ul>
             </div>
         </div>
-    </div>
+    </nav>
     <div class="page-row page-row-expanded">
         <div class="container body-content">
+            @if (ViewBag.Message != null)
+            {
+            <div class="row">
+                <div class="col-xs-12">
+                    @ViewBag.Message
+                </div>
+            </div>
+            }
+
             @RenderBody()
         </div>
     </div>
@@ -58,9 +76,5 @@
             <p>&copy; @DateTime.Now.Year Auto-Barter</p>
         </div>
     </footer>
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
 </body>
 </html>

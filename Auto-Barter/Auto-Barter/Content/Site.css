@@ -1,7 +1,9 @@
 ﻿@import url(https://fonts.googleapis.com/css?family=Open+Sans:700,400,300);
 @import url(https://fonts.googleapis.com/css?family=Gentium+Book+Basic);
-/* Color Scheme */
-/* Color Scheme */
+/* Color Scheme START */
+/* Color Scheme END */
+/* Mixins START */
+/* Mixins END */
 html {
   height: 100%; }
 
@@ -10,7 +12,15 @@ body {
   height: 100%;
   width: 100%;
   padding-top: 80px;
-  padding-bottom: 20px; }
+  padding-bottom: 20px;
+  font-family: "Gentium Book Basic", serif;
+  font-weight: 400; }
+
+a, a:hover, a:focus, a:active {
+  text-decoration: none; }
+
+header, thead, h1, h2, h3, h4, h5, h6, th, nav, .nav, strong, .strong {
+  font-family: "Open Sans", sans-serif; }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
@@ -33,7 +43,7 @@ textarea {
 .navbar-brand {
   height: 80px; }
 
-.nav > li > a {
+.navbar .nav > li > a {
   padding: 30px 15px; }
 
 .navbar-form {
@@ -49,7 +59,7 @@ textarea {
 a:hover, a:active {
   color: #3498db !important; }
 
-/* BUTTONS START */
+/* Buttons START */
 .btn, .btn-white, .btn-magenta, .btn-teal, .btn-blue, .btn-green, .btn-mint, .btn-black {
   display: inline-block;
   padding: 6px 12px;
@@ -75,7 +85,9 @@ a:hover, a:active {
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   -ms-border-radius: 4px;
-  border-radius: 4px; }
+  border-radius: 4px;
+  font-family: "Open Sans", sans-serif;
+  color: #333; }
 
 .btn-white {
   border-color: #bdc3c7;
@@ -84,7 +96,8 @@ a:hover, a:active {
 .btn-white:hover,
 .btn-white:active {
   border-color: #a1aab0;
-  background-color: #cfd9db; }
+  background-color: #cfd9db;
+  color: #333 !important; }
 
 .btn-magenta {
   border-color: #8A48A2;
@@ -126,7 +139,8 @@ a:hover, a:active {
 .btn-green:hover,
 .btn-green:active {
   border-color: #2a8351;
-  background-color: #2fa462; }
+  background-color: #2fa462;
+  color: #333; }
 
 .btn-mint {
   border-color: #2A9C83;
@@ -136,7 +150,8 @@ a:hover, a:active {
 .btn-mint:hover,
 .btn-mint:active {
   border-color: #1f7461;
-  background-color: #259078; }
+  background-color: #259078;
+  color: #ecf0f1; }
 
 .btn-black {
   border-color: #2A2A2A;
@@ -149,5 +164,5 @@ a:hover, a:active {
   background-color: #151515;
   color: #ecf0f1; }
 
-/* BUTTONS END */
+/* Buttons END */
 

@@ -8,10 +8,10 @@ namespace Auto_Barter.Models
 {
     public enum UserRole
     {
-        ADMIN,      // 0
-        SPONSOR,    // 1
-        VIP,        // 3
-        DEFAULT     // 4
+        DEFAULT,
+        SPONSOR,
+        VIP,
+        ADMIN
     }
 
     public class UserAccount

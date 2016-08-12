@@ -2,15 +2,20 @@
 
 @{
     ViewBag.Title = "Index";
+    int UserCount = 0;
 }
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
+        <th></th>
+        <th>
+            @Html.DisplayNameFor(modal => modal.UserId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(modal => modal.UserRole)
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.FirstName)
         </th>
@@ -23,7 +28,17 @@
     </tr>
 
 @foreach (var item in Model) {
+    {
+        UserCount++;
+    }
     <tr>
+        <td><strong>@UserCount</strong></td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserRole)
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.FirstName)
         </td>

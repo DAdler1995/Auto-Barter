@@ -194,6 +194,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -205,10 +206,6 @@
     <Compile Include="Migrations\201608101230403_CreatedAccountDetails.cs" />
     <Compile Include="Migrations\201608101230403_CreatedAccountDetails.Designer.cs">
       <DependentUpon>201608101230403_CreatedAccountDetails.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201608101243429_ReaddedEmailAddress.cs" />
-    <Compile Include="Migrations\201608101243429_ReaddedEmailAddress.Designer.cs">
-      <DependentUpon>201608101243429_ReaddedEmailAddress.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201608101255296_ChangedPhoneNumberToString.cs" />
     <Compile Include="Migrations\201608101255296_ChangedPhoneNumberToString.Designer.cs">
@@ -243,6 +240,8 @@
     <Content Include="scripts\jquery-3.1.0.slim.min.map" />
     <Content Include="scripts\jquery-3.1.0.min.map" />
     <Content Include="Views\Account\UserDetails.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -259,9 +258,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608101230403_CreatedAccountDetails.resx">
       <DependentUpon>201608101230403_CreatedAccountDetails.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201608101243429_ReaddedEmailAddress.resx">
-      <DependentUpon>201608101243429_ReaddedEmailAddress.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608101255296_ChangedPhoneNumberToString.resx">
       <DependentUpon>201608101255296_ChangedPhoneNumberToString.cs</DependentUpon>
@@ -301,9 +297,9 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
-    <Error Condition="!Exists('..\packages\BuildWebCompiler.1.11.319\build\BuildWebCompiler.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\BuildWebCompiler.1.11.319\build\BuildWebCompiler.targets'))" />
+    <Error Condition="!Exists('..\packages\BuildWebCompiler.1.11.320\build\BuildWebCompiler.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\BuildWebCompiler.1.11.320\build\BuildWebCompiler.targets'))" />
   </Target>
-  <Import Project="..\packages\BuildWebCompiler.1.11.319\build\BuildWebCompiler.targets" Condition="Exists('..\packages\BuildWebCompiler.1.11.319\build\BuildWebCompiler.targets')" />
+  <Import Project="..\packages\BuildWebCompiler.1.11.320\build\BuildWebCompiler.targets" Condition="Exists('..\packages\BuildWebCompiler.1.11.320\build\BuildWebCompiler.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
