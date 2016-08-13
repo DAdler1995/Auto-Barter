@@ -59,9 +59,6 @@ textarea {
 a:hover, a:active {
   color: #3498db !important; }
 
-.row {
-  margin: 15px -15px; }
-
 /* Buttons START */
 .btn, .btn-white, .btn-magenta, .btn-teal, .btn-blue, .btn-green, .btn-mint, .btn-black {
   display: inline-block;
@@ -90,9 +87,7 @@ a:hover, a:active {
   -ms-border-radius: 4px;
   border-radius: 4px;
   font-family: "Open Sans", sans-serif;
-  color: #333;
-  width: 100%;
-  max-width: 200px; }
+  color: #333; }
 
 .btn-white {
   border-color: #bdc3c7;

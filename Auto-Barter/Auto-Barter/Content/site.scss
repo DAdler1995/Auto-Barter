@@ -111,10 +111,6 @@ a:hover, a:active {
     color: $Blue-Light !important;
 }
 
-.row {
-    margin: 15px -15px;
-}
-
 /* Buttons START */
 .btn {
     display: inline-block;
@@ -141,8 +137,6 @@ a:hover, a:active {
     @include border-radius(4px);
     font-family: $TitleFont;
     color: #333;
-    width: 100%;
-    max-width: 200px;
 }
 
 .btn-white {

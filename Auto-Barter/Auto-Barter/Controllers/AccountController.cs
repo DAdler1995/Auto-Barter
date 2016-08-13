@@ -6,8 +6,6 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using System.Net.Mail;
-using System.Security.Cryptography;
-using System.IO;
 
 namespace Auto_Barter.Controllers
 {
@@ -77,16 +75,6 @@ namespace Auto_Barter.Controllers
                     Session["EmailAddress"] = user.EmailAddress;
                     Session["FullName"] = user.FullName;
                     Session["UserRole"] = user.UserRole;
-                    
-                    using (RijndaelManaged myRijndael = new RijndaelManaged())
-                    {
-                        myRijndael.GenerateKey();
-                        myRijndael.GenerateIV();
-
-                        Session["KEY"] = myRijndael.Key;
-                        Session["IV"] = myRijndael.IV;
-                    }
-
                     return RedirectToAction("UserDetails");
                 }
                 else
@@ -115,21 +103,9 @@ namespace Auto_Barter.Controllers
             {
                 using (var db = new OurDbContext())
                 {
+                    var UserDetails = new UserDetails();
                     var id = int.Parse(Session["UserId"].ToString());
-                    var UserDetails = db.UserDetails.Include(x => x.Address).Include(x => x.UserAccount).FirstOrDefault(x => x.UserAccount.UserId == id);
-
-                    if (UserDetails == null)
-                    {
-                        UserDetails = new UserDetails();
-                        UserDetails.UserAccount = db.UserAccount.FirstOrDefault(x => x.UserId == id);
-                    }
-
-                    byte[] EncryptPassword = EncryptStringToBytes(UserDetails.UserAccount.Password, (byte[])Session["KEY"], (byte[])Session["IV"]);
-                    byte[] EncryptConfirmPassword = EncryptStringToBytes(UserDetails.UserAccount.Password, (byte[])Session["KEY"], (byte[])Session["IV"]);
-
-
-                    UserDetails.UserAccount.Password = Convert.ToBase64String(EncryptPassword);
-                    UserDetails.UserAccount.ConfirmPassword = Convert.ToBase64String(EncryptConfirmPassword);
+                    UserDetails = db.UserDetails.Include(x => x.Address).Include(x => x.UserAccount).FirstOrDefault(x => x.UserAccount.UserId == id);
 
                     return View(UserDetails);
                 }
@@ -143,13 +119,6 @@ namespace Auto_Barter.Controllers
         {
             if (Session["UserId"] != null)
             {
-                var EncryptedPassword = Convert.FromBase64String(details.UserAccount.Password);
-                var EncryptedConfirmPassword = Convert.FromBase64String(details.UserAccount.ConfirmPassword);
-
-                details.UserAccount.Password = DecryptStringFromBytes(EncryptedPassword, (byte[])Session["KEY"], (byte[])Session["IV"]);
-                details.UserAccount.ConfirmPassword = DecryptStringFromBytes(EncryptedConfirmPassword, (byte[])Session["KEY"], (byte[])Session["IV"]);
-
-
                 var id = int.Parse(Session["UserId"].ToString());
                 using (OurDbContext db = new OurDbContext())
                 {
@@ -160,7 +129,6 @@ namespace Auto_Barter.Controllers
                     else
                     {
                         var UserDetails = db.UserDetails.Include(x => x.Address).Include(x => x.UserAccount).FirstOrDefault(x => x.UserAccount.UserId == id);
-
                         if (UserDetails != null)
                         {
                             UserDetails = details;
@@ -222,94 +190,6 @@ namespace Auto_Barter.Controllers
             //}
 
             return View();
-        }
-
-
-
-        static byte[] EncryptStringToBytes(string plainText, byte[] Key, byte[] IV)
-        {
-            // Check arguments.
-            if (plainText == null || plainText.Length <= 0)
-                throw new ArgumentNullException("plainText");
-            if (Key == null || Key.Length <= 0)
-                throw new ArgumentNullException("Key");
-            if (IV == null || IV.Length <= 0)
-                throw new ArgumentNullException("IV");
-            byte[] encrypted;
-            // Create an RijndaelManaged object
-            // with the specified key and IV.
-            using (RijndaelManaged rijAlg = new RijndaelManaged())
-            {
-                rijAlg.Key = Key;
-                rijAlg.IV = IV;
-
-                // Create a decrytor to perform the stream transform.
-                ICryptoTransform encryptor = rijAlg.CreateEncryptor(rijAlg.Key, rijAlg.IV);
-
-                // Create the streams used for encryption.
-                using (MemoryStream msEncrypt = new MemoryStream())
-                {
-                    using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
-                    {
-                        using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
-                        {
-
-                            //Write all data to the stream.
-                            swEncrypt.Write(plainText);
-                        }
-                        encrypted = msEncrypt.ToArray();
-                    }
-                }
-            }
-
-
-            // Return the encrypted bytes from the memory stream.
-            return encrypted;
-
-        }
-        static string DecryptStringFromBytes(byte[] cipherText, byte[] Key, byte[] IV)
-        {
-            // Check arguments.
-            if (cipherText == null || cipherText.Length <= 0)
-                throw new ArgumentNullException("cipherText");
-            if (Key == null || Key.Length <= 0)
-                throw new ArgumentNullException("Key");
-            if (IV == null || IV.Length <= 0)
-                throw new ArgumentNullException("IV");
-
-            // Declare the string used to hold
-            // the decrypted text.
-            string plaintext = null;
-
-            // Create an RijndaelManaged object
-            // with the specified key and IV.
-            using (RijndaelManaged rijAlg = new RijndaelManaged())
-            {
-                rijAlg.Key = Key;
-                rijAlg.IV = IV;
-
-                // Create a decrytor to perform the stream transform.
-                ICryptoTransform decryptor = rijAlg.CreateDecryptor(rijAlg.Key, rijAlg.IV);
-
-                // Create the streams used for decryption.
-                using (MemoryStream msDecrypt = new MemoryStream(cipherText))
-                {
-                    using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
-                    {
-                        using (StreamReader srDecrypt = new StreamReader(csDecrypt))
-                        {
-
-                            // Read the decrypted bytes from the decrypting stream
-                            // and place them in a string.
-                            plaintext = srDecrypt.ReadToEnd();
-                        }
-                    }
-                }
-
-            }
-
-            return plaintext;
-
         }
     }
 }

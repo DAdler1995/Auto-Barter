@@ -24,6 +24,12 @@ namespace Auto_Barter.Controllers
 
             List<SelectListItem> items = new List<SelectListItem>();
 
+            items.Add(new SelectListItem
+            {
+                Text = "Choose a make",
+                Value = null
+            });
+
             foreach (var item in content.makes)
             {
                 items.Add(new SelectListItem
@@ -44,16 +50,25 @@ namespace Auto_Barter.Controllers
             List<string> ModelNames = new List<string>();
             var serialiser = new JavaScriptSerializer();
 
-            string apiKey = "968v7jffe8uw4teunhppq5r5";
-            var client = new RestClient("http://api.edmunds.com/api/vehicle/v2/");
-            var request = new RestRequest($"{make}?&view=basic&fmt=json&api_key={apiKey}");
-            request.OnBeforeDeserialization = resp => { resp.ContentType = "application/json"; };
-            var response = client.Execute(request);
-            var content = JsonConvert.DeserializeObject<makes>(response.Content);
-            foreach (var item in content.models)
+            if (make == "Choose a make")
             {
-                ModelNames.Add(item.name);
+                ModelNames.Clear();
+            }
+            else
+            {
+                ModelNames.Add("Choose a model");
 
+                string apiKey = "968v7jffe8uw4teunhppq5r5";
+                var client = new RestClient("http://api.edmunds.com/api/vehicle/v2/");
+                var request = new RestRequest($"{make}?&view=basic&fmt=json&api_key={apiKey}");
+                request.OnBeforeDeserialization = resp => { resp.ContentType = "application/json"; };
+                var response = client.Execute(request);
+                var content = JsonConvert.DeserializeObject<makes>(response.Content);
+                foreach (var item in content.models)
+                {
+                    ModelNames.Add(item.name);
+
+                }
             }
 
             var models = serialiser.Serialize(ModelNames);
