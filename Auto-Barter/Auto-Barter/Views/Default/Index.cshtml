@@ -3,43 +3,85 @@
     ViewBag.Title = "Index";
 
 }
-@Html.Hidden("makeId", null)
 
 <h2>Index</h2>
 
-<p class="btn-blue">Btn test</p>
+<div class="row">
+    <div class="col-md-2">
+        <p class="btn-blue">Btn test</p>
+    </div>
+    <div class="col-md-2">
+        <p class="btn-white">Btn test</p>
+    </div>
+    <div class="col-md-2">
+        <p class="btn-magenta">Btn test</p>
+    </div>
+    <div class="col-md-2">
+        <p class="btn-teal">Btn test</p>
+    </div>
+    <div class="col-md-2">
+        <p class="btn-green">Btn test</p>
+    </div>
+    <div class="col-md-2">
+        <p class="btn-mint">Btn test</p>
+    </div>
+</div>
 
-<p class="btn-white">Btn test</p>
+<div class="row">
+    <div class="col-md-2">
+        <p class="btn-black">Btn test</p>
+    </div>
+</div>
 
-<p class="btn-magenta">Btn test</p>
+<div class="row">
+    <div class="col-md-2">
+        <div class="dropdown" id="Makes">
+            <button class="btn-white dropdown-toggle" type="button" id="ddlMakes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span id="selectedMake">Select a Make</span><span class="caret"></span></button>
+            <ul class="dropdown-menu" aria-labelledby="ddlMakes">
+                @foreach (var item in (IEnumerable<SelectListItem>)ViewBag.Makes)
+                {
+                    <li id="@item.Value"><a href="#" id="@item.Value">@item.Text</a></li>
+                }
+            </ul>
+        </div>
+    </div>
 
-<p class="btn-teal">Btn test</p>
+    <div class="col-md-2">
+        <div class="dropdown" id="Models">
+            <button class="btn-white dropdown-toggle" type="button" id="ddlMakes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span id="selectedModel">Select a Model</span><span class="caret"></span></button>
+            <ul class="dropdown-menu" aria-labelledby="ddlModels"></ul>
+        </div>
+    </div>
 
-<p class="btn-green">Btn test</p>
-
-<p class="btn-mint">Btn test</p>
-
-<p class="btn-black">Btn test</p>
-
-@Html.DropDownList("Makes", (IEnumerable<SelectListItem>)ViewBag.Makes, htmlAttributes: new { @class = "form-control" })
-<select class="form-control" id="Models"></select>
+    <div class="col-md-2">
+        <div class="form-group">
+            <input class="form-control" placeholder="" />
+        </div>
+    </div>
+</div>
 
 <script src="~/scripts/jquery-3.1.0.js"></script>
+
 <script>
-    $('#Makes').change(function () {
+    $(document).on('click', '#Makes.dropdown li > a', function(e) {
+        $('#selectedMake').text($(this).text());
+        $("#Models ul.dropdown-menu").empty();
+
         $.ajax({
             type: "POST",
             url: "/Default/GetModel",
-            data: { "make": $('#Makes').val() },
+            data: { "make": $(this).attr('id') },
             success: function (data) {
                 var makes = $.parseJSON(data);
 
-                var listItems = "";
                 for (var i = 0; i < makes.length; i++) {
-                    listItems += "<option value='" + makes[i] + "'>" + makes[i] + "</option>";
+                    $("#Models ul.dropdown-menu").append("<li id='" + makes[i] + "'><a href='#' id='" + makes[i] + "'>" + makes[i] + "</a></li>");
                 }
-                $("#Models").html(listItems);
             }
-        })
+        });
+    });
+
+    $(document).on('click', '#Models.dropdown li > a', function (e) {
+        $('#selectedModel').text($(this).text());
     });
 </script>

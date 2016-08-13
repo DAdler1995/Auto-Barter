@@ -19,6 +19,8 @@
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.UserDetailsId)
+        @Html.HiddenFor(model => model.UserAccount.Password)
+        @Html.HiddenFor(model => model.UserAccount.ConfirmPassword)
 
         <div class="tab-content">
             <div id="PersonalInformation" class="tab-pane fade in active">
