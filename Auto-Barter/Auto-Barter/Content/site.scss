@@ -1,7 +1,7 @@
 ﻿@import url(https://fonts.googleapis.com/css?family=Open+Sans:700,400,300);
 @import url(https://fonts.googleapis.com/css?family=Gentium+Book+Basic);
-$GeneralFont:   'Gentium Book Basic', serif;
-$TitleFont:     'Open Sans', sans-serif;
+$GeneralFont: 'Gentium Book Basic', serif;
+$TitleFont: 'Open Sans', sans-serif;
 
 $navbar-height: 80px;
 
@@ -61,20 +61,24 @@ a, a:hover, a:focus, a:active {
 }
 
 header, thead, h1, h2, h3, h4, h5, h6, th, nav, .nav, strong, .strong {
+    font-weight: bold;
     font-family: $TitleFont;
 }
 
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+input[type=number] {
+    -moz-appearance:textfield;
+}
+
+input {
+    width: 100%;
 }
 
 .page-row {

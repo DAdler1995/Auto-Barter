@@ -1,11 +1,36 @@
 ﻿using RestSharp.Deserializers;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
 namespace Auto_Barter.Models
 {
+
+    public enum TitleStatus
+    {
+        CLEAN,
+        SALVAGE,
+        REBUILT,
+        LEIN
+    }
+    public enum Drivetype
+    {
+        FWD,
+        RWD,
+        AWD
+    }
+
+    public enum Transmission
+    {
+        MANUAL,
+        AUTOMATIC,
+        AUTOMANUAL,
+        CVT,
+        OTHER
+    }
+
     public class CarModels
     {
         public class Year
@@ -22,7 +47,7 @@ namespace Auto_Barter.Models
             public List<Year> years { get; set; }
         }
 
-        public class makes
+        public class Make
         {
             [DeserializeAs(Name = "id")]
             public int id { get; set; }
@@ -37,9 +62,40 @@ namespace Auto_Barter.Models
         public class RootObject
         {
             [DeserializeAs(Name = "makes")]
-            public IEnumerable<makes> makes { get; set; }
+            public IEnumerable<Make> makes { get; set; }
             [DeserializeAs(Name = "makeCount")]
             public int makesCount { get; set; }
+        }
+
+
+        public class Car
+        {
+            [Key]
+            public int CarId { get; set; }
+            public string Make { get; set; }
+            public string Model { get; set; }
+            public int Year { get; set; }
+            public string Vin { get; set; }
+
+            [Required(ErrorMessage = "Car mileage is required.")]
+            public int Mileage { get; set; }
+
+            [Display(Name = "Car Title Status"), Required(ErrorMessage = "Title is required.")]
+            public TitleStatus Title { get; set; }
+
+            [Required(ErrorMessage = "Transmission type is required")]
+            public Transmission Transmission { get; set; }
+
+            [Required(ErrorMessage = "Drivetype type is required")]
+            public Drivetype Drivetype { get; set; }
+
+            [Display(Name = "Exterior Color"), Required(ErrorMessage = "Exterior color is required.")]
+            public string ExteriorColor { get; set; }
+
+            [Display(Name = "Interior Color")]
+            public string InteriorColor { get; set; }
+
+            public DateTime EnteredDateTime { get; set; }
         }
     }
 }

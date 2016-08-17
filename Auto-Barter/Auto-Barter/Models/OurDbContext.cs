@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Data.Entity;
 using Auto_Barter.Models.Common;
+using static Auto_Barter.Models.CarModels;
 
 namespace Auto_Barter.Models
 {
@@ -12,5 +13,7 @@ namespace Auto_Barter.Models
         public DbSet<UserAccount> UserAccount { get; set; }
         public DbSet<Address> Address { get; set; }
         public DbSet<UserDetails> UserDetails { get; set; }
+        public DbSet<CarPost> CarPost { get; set; }
+        public DbSet<Car> Car { get; set; }
     }
 }

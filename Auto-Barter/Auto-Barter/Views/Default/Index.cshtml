@@ -21,25 +21,51 @@
 
 <p class="btn-black">Btn test</p>
 
-@Html.DropDownList("Makes", (IEnumerable<SelectListItem>)ViewBag.Makes, htmlAttributes: new { @class = "form-control" })
+<div id="MakeList" class="dropdown">
+    <button class="btn-white dropdown-toggle" type="button" id="ddlMakes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        <span id="CurrentMakeSelection">Select a Make</span>
+        <span class="caret pull-right"></span>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="ddlMakes">
+        @foreach (var item in (IEnumerable<SelectListItem>)ViewBag.Makes)
+        {
+            <li id="@item.Value"><a id="@item.Value" href="#">@item.Text</a></li>
+        }
+    </ul>
+</div>
+
+<div id="ModelList" class="dropdown">
+    <button class="btn-white dropdown-toggle" type="button" id="ddlModels" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        <span id="CurrentModelSelection">Select a Make</span>
+        <span class="caret pull-right"></span>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="ddlModels">
+    </ul>
+</div>
+
 <select class="form-control" id="Models"></select>
 
 <script src="~/scripts/jquery-3.1.0.js"></script>
 <script>
-    $('#Makes').change(function () {
+    $(document).on('click', '#MakeList.dropdown li > a', function (e) {
+        $('#CurrentMakeSelection').text($(this).text());
+
         $.ajax({
             type: "POST",
             url: "/Default/GetModel",
-            data: { "make": $('#Makes').val() },
+            data: { "make": $(this).attr('id') },
             success: function (data) {
-                var makes = $.parseJSON(data);
+                var models = $.parseJSON(data);
+                alert(models);
 
-                var listItems = "";
-                for (var i = 0; i < makes.length; i++) {
-                    listItems += "<option value='" + makes[i] + "'>" + makes[i] + "</option>";
+                for (var i = 0; i < models.length; i++) {
+                    $('#ModelList.dropdown .dropdown-menu').append("<li id='" + models[i] + "'><a id='" + models[i] + "' href='#'>" + models[i] + "</a></li>")
                 }
-                $("#Models").html(listItems);
             }
-        })
+        });
+    });
+
+    $(document).on('click', '#ModelList.dropdown li > a', function (e) {
+        $('#CurrentModelSelection').text($(this).text());
     });
 </script>

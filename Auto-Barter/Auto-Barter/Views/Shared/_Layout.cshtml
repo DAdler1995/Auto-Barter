@@ -15,11 +15,12 @@
     <link rel="icon" href="~/Content/Images/Logo-v1.png">
     <link rel="apple-touch-icon-precomposed" href="~/Content/Images/Logo-v1.png">
     <title>Auto-Barter | @ViewBag.Title</title>
-    @Styles.Render("~/Content/css")
 </head>
 <body>
+    @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/tinymce")
     @RenderSection("scripts", required: false)
     
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -32,7 +33,7 @@
                 </button>
                 <a href="@Url.Action("Index", "Default", null)" class="navbar-brand" >
                     <img class="hidden-xs" src="~/Content/Images/Logo-Big-v1.png" alt="Auto-Barter" />
-                    <img class="hidden-lg hidden-md hidden-sm" src="~/Content/Images/Logo-v1.png" alt="Auto-Barter" />
+                    <img class="visible-xs" src="~/Content/Images/Logo-v1.png" alt="Auto-Barter" />
                 </a>
             </div>
             <div class="navbar-collapse collapse">

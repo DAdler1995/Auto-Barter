@@ -1,0 +1,521 @@
+﻿@model Auto_Barter.Models.CarPost
+
+@{
+    ViewBag.Title = "Create";
+
+    List<SelectListItem> dates = new List<SelectListItem>();
+    dates.Add(new SelectListItem { Text = "Older", Value = "-1" });
+    for (int i = 1900; i < DateTime.Now.Year + 1; i++)
+    {
+        dates.Add(new SelectListItem
+        {
+            Text = i.ToString(),
+            Value = i.ToString()
+        });
+    }
+    dates.Reverse();
+
+    List<SelectListItem> options = new List<SelectListItem>();
+    options.Add(new SelectListItem
+    {
+        Text = "Yes",
+        Value = "true"
+    });
+    options.Add(new SelectListItem
+    {
+        Text = "No",
+        Value = "false",
+        Selected = true
+    });
+}
+<script src="~/scripts/CreateNewPost.js"></script>
+<h2>Create</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.UserCar.Year)
+    @Html.HiddenFor(model => model.UserCar.Make)
+    @Html.HiddenFor(model => model.UserCar.Model)
+
+    <div class="row" id="NewCarPost">
+        <div class="form-horizontal">
+            <h4>Post Details</h4>
+            <hr />
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="panel-group" role="tablist" aria-multiselectable="true">
+                <div id="CarDetailsPanel" class="panel panel-default">
+                    <div id="CarDetailsHeading" class="panel-heading" role="button" data-toggle="collapse" data-parent=".panel-group" href="#CarDetails" aria-expanded="true" aria-controls="CarDetails">
+                        <h4 class="panel-title">
+                            Car Details <span id="CarDetailStatus" class="pull-right"></span>
+                        </h4>
+                    </div>
+                    <div id="CarDetails" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="CarDetailsHeading">
+                        <div class="panel-body">
+
+                            <!-- Car Details START -->
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.UserCar.Vin, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.UserCar.Vin, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.UserCar.Vin, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.UserCar.Year, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownList("UserYear", dates, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.UserCar.Year, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.UserCar.Make, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    <div class="custom" style="display: none;">
+                                        <input id="CustomMake" class="form-control" />
+                                    </div>
+                                    @Html.DropDownList("UserMake", (IEnumerable<SelectListItem>)ViewBag.Makes, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.UserCar.Make, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.UserCar.Model, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    <div class="custom" style="display: none;">
+                                        <input id="CustomModel" class="form-control" />
+                                    </div>
+                                    <select id="UserModel" class="form-control"></select>
+                                    @Html.ValidationMessageFor(model => model.UserCar.Model, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <br />
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.UserCar.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EnumDropDownListFor(model => model.UserCar.Title, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.UserCar.Title, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.UserCar.Mileage, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.UserCar.Mileage, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.UserCar.Mileage, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.UserCar.ExteriorColor, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.UserCar.ExteriorColor, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.UserCar.ExteriorColor, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.UserCar.InteriorColor, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.UserCar.InteriorColor, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.UserCar.InteriorColor, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.UserCar.Transmission, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EnumDropDownListFor(model => model.UserCar.Transmission, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.UserCar.Transmission, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.UserCar.Drivetype, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EnumDropDownListFor(model => model.UserCar.Drivetype, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.UserCar.Drivetype, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <!-- Car Details END -->
+
+                        </div>
+                    </div>
+                </div>
+
+                <div id="PostDetailsPanel" class="panel panel-default">
+                    <div id="PostDetailsHeading" class="panel-heading" role="button" data-toggle="collapse" data-parent=".panel-group" href="#PostDetials" aria-expanded="true" aria-controls="PostDetails">
+                        <h4 class="panel-title">
+                            Post Details
+                        </h4>
+                    </div>
+                    <div id="PostDetials" class="panel-collapse collapse" role="tabpanel" aria-labelledby="PostDetails">
+                        <div class="panel-body">
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Details, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.TextAreaFor(model => model.Details, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Details, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.AdditionalCash, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.EditorFor(model => model.AdditionalCash, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.AdditionalCash, "", new { @class = "text-danger" })
+                                </div>
+                                @Html.LabelFor(model => model.OpenToOffers, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.DropDownListFor(model => model.OpenToOffers, options, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.OpenToOffers, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ImageUrl, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.ImageUrl, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.ImageUrl, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div id="desiredCar1" class="form-group">
+                                <label class="control-label col-md-2">Desired Trade #1</label>
+                                <div class="col-md-3">
+                                    @Html.DropDownList("Car_Year", dates, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DropDownList("Car_Make", (IEnumerable<SelectListItem>)ViewBag.Makes, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                                <div class="col-md-3">
+                                    <input id="desiredCarModel" class="form-control" placeholder="Model" type="text" />
+                                </div>
+                            </div>
+
+                            <div id="desiredCar2" class="form-group">
+                                <label class="control-label col-md-2">Desired Trade #2</label>
+                                <div class="col-md-3">
+                                    @Html.DropDownList("Car_Year", dates, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DropDownList("Car_Make", (IEnumerable<SelectListItem>)ViewBag.Makes, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                                <div class="col-md-3">
+                                    <input id="desiredCarModel" class="form-control" placeholder="Model" type="text" />
+                                </div>
+                            </div>
+
+                            <div id="desiredCar3" class="form-group">
+                                <label class="control-label col-md-2">Desired Trade #3</label>
+                                <div class="col-md-3">
+                                    @Html.DropDownList("Car_Year", dates, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DropDownList("Car_Make", (IEnumerable<SelectListItem>)ViewBag.Makes, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                                <div class="col-md-3">
+                                    <input id="desiredCarModel" class="form-control" placeholder="Model" type="text" />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h4>Post Example</h4>
+            <hr />
+
+            <h3>Slim Post Example <span class="btn-white" data-toggle="collapse" data-target="#SlimPostExample">Hide/Show</span></h3>
+            <div id="SlimPostExample" class="collapse" style="border: 1px solid #333; border-radius: 4px; overflow: hidden; height: 315px; max-height: 315px; min-height: 315px;">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <h4>VIN: <span id="vin"></span></h4>
+                            <img id="imageUrl" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=Your%20Image&w=300&h=300" style="width: 100%; height: auto; margin-bottom: 10px;" />
+                        </div>
+                        <div class="col-xs-6">
+                            <h4>Owner's Details</h4>
+                            <div id="details" style="word-wrap: break-word; margin-bottom: 10px;">---</div>
+                        </div>
+                        <div class="col-xs-3">
+                            <h4><span id="year">---</span> <span id="make">---</span> <span id="model">---</span></h4>
+                            <p><strong><span id="mileage">---</span> mi</strong></p>
+                            <br />
+                            <p>Title Status: <span id="title">CLEAN</span></p>
+                            <p><span id="exteriorColor">---</span> (ext) | <span id="interiorColor">---</span> (int)</p>
+                            <p><span id="transmission">MANUAL</span> | <span id="drivetype">FWD</span></p>
+                            <button type="button" class="btn-white" style="margin: 10px 0;">Contact Owner</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Full Post Example <span class="btn-white" data-toggle="collapse" data-target="#FullPostExample">Hide/Show</span></h3>
+            <div id="FullPostExample" class="collapse" style="border: 1px solid #333; border-radius: 4px;">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <img id="imageUrlFull" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=Your%20Image&w=1000&h=1000" style="width: 100%; height: auto; margin-top: 10px;" />
+                        </div>
+                        <div class="col-md-4">
+                            <h4><span id="yearFull">---</span> <span id="makeFull">---</span> <span id="modelFull">---</span></h4>
+                            <h4>VIN: <span id="vin"></span></h4>
+                            <p><strong><span id="mileageFull">---</span> mi</strong></p>
+                            <br />
+                            <p>Title Status: <span id="titleFull">CLEAN</span></p>
+                            <p><span id="exteriorColorFull">---</span> (ext) | <span id="interiorColorFull">---</span> (int)</p>
+                            <p><span id="transmissionFull">MANUAL</span> | <span id="drivetypeFull">FWD</span></p>
+                            <button type="button" class="btn-white" style="margin: 10px 0;">Contact Owner</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div id="detailsFull" style="word-wrap: break-word; margin-bottom: 10px;">---</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group">
+            <hr />
+            <div class="col-md-2">
+                <input type="submit" value="Create Post" class="btn-white" />
+            </div>
+            <div class="col-md-10"></div>
+        </div>
+    </div>
+}
+
+<script>
+    $('#UserYear').on('change', function () {
+        $('#UserModel').find('option').remove();
+        if ($(this).val() < 1990) {
+            $('#UserMake').hide().val(null);
+            $('#UserModel').hide().val(null);
+
+            $('.custom > input').show().prop('disabled', false);
+            $('.custom').show();
+        } else {
+            $('.custom').hide();
+            $('.custom > input').show().val(null).text(null);
+
+            $('#UserMake').show();
+            $('#UserModel').show();
+
+        }
+    });
+
+    $(document).on('change', '#UserCar_Vin', function () {
+        if ($(this).val().length === 17) {
+            $.ajax({
+                type: "POST",
+                url: "/Car/GetCarInfo",
+                data: { "vin": $(this).val() },
+                success: function (data) {
+                    var car = $.parseJSON(data);
+
+
+                    $('.custom > input').show();
+                    $('.custom').show();
+
+                    $('#UserMake').hide().val(car.Make);
+                    $('#UserModel').hide().val(car.Model);
+                    $('#CustomMake').show().val(car.Make).text(car.Make).prop('disabled', true);
+                    $('#CustomModel').show().val(car.Model).text(car.Model).prop('disabled', true);
+                    $('#UserYear').prop('disabled', true);
+
+                    $('#UserYear').val(car.Year);
+                }
+            });
+        } else {
+            $('#UserYear').prop('disabled', false);
+            $('.custom').hide();
+            $('.custom > input').show().val(null).text(null);
+
+            $('#UserMake').show();
+            $('#UserModel').show();
+        }
+    });
+
+    $(document).on('change', '#UserMake', function () {
+        if ($('#UserYear').val() > 1990) {
+            $.ajax({
+                type: "POST",
+                url: "/Car/GetCarModels",
+                data: { "make": $(this).val() },
+                success: function (data) {
+                    var models = $.parseJSON(data);
+                    $('#UserModel').find('option').remove();
+
+                    for (var i = 0; i < models.length; i++) {
+                        $('#UserModel')
+                                .append($("<option></option>")
+                                        .attr("value", models[i])
+                                        .text(models[i]));
+                    }
+                }
+            });
+        }
+    });
+
+    $(document).on('change', '#UserYear', function () {
+        $('#UserCar_Year').val($(this).val());
+        alert($('#UserCar_Year').val());
+    });
+
+    $(document).on('change', '#UserMake', function () {
+        $('#UserCar_Make').val($(this).val());
+        alert($('#UserCar_Make').val());
+    });
+    $(document).on('keyup', '#CustomMake', function () {
+        $('#UserCar_Make').val($(this).val());
+        alert($('#UserCar_Make').val());
+    });
+
+    $(document).on('change', '#UserModel', function () {
+        $('#UserCar_Model').val($(this).val());
+        alert($('#UserCar_Model').val());
+    });
+    $(document).on('keyup', '#CustomModel', function () {
+        $('#UserCar_Model').val($(this).val());
+        alert($('#UserCar_Model').val());
+    });
+</script>
+
+<script>
+    $('form :input').on('change', function (e) {
+        ValidateCarDetails();
+    });
+
+    function ValidateCarDetails() {
+        var Make = $('#UserCar_Make');
+        var Model = $('#UserCar_Model');
+        var Year = $('#UserCar_Year');
+        var Mileage = $('#UserCar_Mileage');
+        var Title = $('#UserCar_Title');
+        var Transmission = $('#UserCar_Transmission');
+        var Drivetype = $('#UserCar_Drivetype');
+        var ExteriorColor = $('#UserCar_ExteriorColor');
+
+        if (Make.val() != ''
+            && Model.val() != ''
+            && Model.val() != ''
+            && Year.val() != ''
+            && Mileage.val() != ''
+            && Title.val() != ''
+            && Transmission.val() != ''
+            && Drivetype.val() != ''
+            && ExteriorColor.val() != '')
+        {
+            $('#CarDetailsPanel').removeClass('panel-default').addClass('panel-success');
+            $('#CarDetailStatus').addClass('glyphicon glyphicon-ok');
+        } else {
+            $('#CarDetailsPanel').removeClass('panel-success').addClass('panel-default');
+            $('#CarDetailStatus').removeClass('glyphicon glyphicon-ok');
+        }
+    }
+
+    tinymce.init({
+        selector: 'textarea',
+        setup: function (editor) {
+            editor.on('change', function () {
+                var contentFull = tinymce.get('Details').getContent();
+                var content = tinymce.get('Details').getContent({ format: 'text' }).substring(0, 1065) + "...";
+
+                $('#details').html(content);
+                $('#detailsFull').html(contentFull);
+            });
+        }
+    });
+
+    function DisplayPreview(target, value)
+    {
+        if (value.val().length > 0) {
+            target.text(value.val());
+        } else {
+            target.text('---');
+        }
+    }
+
+    $('#NewCarPost #ImageUrl:input').keyup(function () {
+        $('#imageUrl').attr('src', $('#ImageUrl').val());
+        $('#imageUrlFull').attr('src', $('#ImageUrl').val());
+    });
+
+    $('#NewCarPost #VIN:input').keyup(function () {
+        DisplayPreview($('#vin'), $('#UserCar_Vin'));
+        DisplayPreview($('#vinFull'), $('#UserCar_Vin'));
+    });
+
+    $('#NewCarPost #Year:input').keyup(function () {
+        DisplayPreview($('#year'), $('#UserCar_Year'));
+        DisplayPreview($('#yearFull'), $('#UserCar_Year'));
+
+    });
+
+    $('#NewCarPost #Make:input').keyup(function () {
+        DisplayPreview($('#make'), $('#UserCar_Make'));
+        DisplayPreview($('#makeFull'), $('#UserCar_Make'));
+
+    });
+
+    $('#NewCarPost #Model:input').keyup(function () {
+        DisplayPreview($('#model'), $('#UserCar_Model'));
+        DisplayPreview($('#modelFull'), $('#UserCar_Model'));
+
+    });
+
+    $('#NewCarPost #Mileage:input').keyup(function () {
+        if ($('#Mileage').val().length > 0) {
+            $('#mileage').text($('#UserCar_Mileage').val().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+            $('#mileageFull').text($('#UserCar_Mileage').val().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+        } else {
+            $('#mileage').text('---');
+            $('#mileageFull').text('---');
+        }
+
+    });
+
+    $('#NewCarPost #ExteriorColor:input').keyup(function () {
+        DisplayPreview($('#exteriorColor'), $('#UserCar_ExteriorColor'));
+        DisplayPreview($('#exteriorColorFull'), $('#UserCar_ExteriorColor'));
+
+    });
+    $('#NewCarPost #InteriorColor:input').keyup(function () {
+        DisplayPreview($('#interiorColor'), $('#UserCar_InteriorColor'));
+        DisplayPreview($('#interiorColorFull'), $('#UserCar_InteriorColor'));
+    });
+
+    $('#Transmission').change(function () {
+        DisplayPreview($('#transmission'), $('#UserCar_Transmission option:selected').text());
+        DisplayPreview($('#transmissionFull'), $('#UserCar_Transmission option:selected').text());
+    });
+
+    $('#Drivetype').change(function () {
+        DisplayPreview($('#drivetype'), $('#UserCar_Drivetype option:selected').text());
+        DisplayPreview($('#drivetypeFull'), $('#UserCar_Drivetype option:selected').text());
+    });
+
+    $('#Title').change(function () {
+        DisplayPreview($('#title'), $('#UserCar_Title option:selected'));
+        DisplayPreview($('#titleFull'), $('#UserCar_Title option:selected'));
+    });
+</script>
